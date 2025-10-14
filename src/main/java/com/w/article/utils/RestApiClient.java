@@ -1,5 +1,6 @@
 package com.w.article.utils;
 
+import com.google.common.collect.Maps;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,11 +19,8 @@ public class RestApiClient {
         this.restClient = restClient;
     }
 
-    public <T> T get(URI uri, Class<T> responseType) {
-        return restClient.get()
-                .uri(uri)
-                .retrieve()
-                .body(responseType);
+    public <T> T get(String url, Class<T> responseType) {
+        return get(url, Maps.newHashMap(), responseType);
     }
 
     public <T> T get(String url, Map<String, Object> params, Class<T> responseType) {
@@ -40,7 +38,7 @@ public class RestApiClient {
     }
 
     public <T> T post(String url, Map<String, Object> params, Class<T> responseType) {
-        return post(url, params, new HashMap<>(),responseType);
+        return post(url, params, new HashMap<>(), responseType);
     }
 
     public <T> T post(String url, Map<String, Object> params, Map<String, String> headers, Class<T> responseType) {

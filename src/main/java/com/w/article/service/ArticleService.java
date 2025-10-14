@@ -2,7 +2,12 @@ package com.w.article.service;
 
 import com.w.article.entity.Article;
 import com.w.article.repository.ArticleRepository;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -19,11 +24,17 @@ public class ArticleService {
     }
 
     @Transactional
-    public List<Article> selectArticleList() {
+    public Page<Article> selectArticleList(String keyword, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("writeDateTimestamp").descending());
+        if (StringUtils.isBlank(keyword)) {
+            return articleRepository.findAll(pageable);
+        }
+        return articleRepository.findListBySubject(keyword, pageable);
+    }
 
-        boolean result = articleRepository.existsByCafeIdAndArticleId("1", "15161515");
-        System.out.println(result);
-        return articleRepository.findAll();
+    @Transactional
+    public boolean existsByCafeIdAndArticleId(String cafeId, String articleId) {
+        return articleRepository.existsByCafeIdAndArticleId(cafeId, articleId);
     }
 
     @Transactional

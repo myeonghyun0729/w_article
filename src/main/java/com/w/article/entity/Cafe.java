@@ -16,8 +16,14 @@ public class Cafe extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
+
+    @Column(length = 20)
     private String cafeName;
+
+    @Column(length = 20)
     private String cafeId;
+
+    @Column(length = 20)
     private String menuId;
 
     public static Cafe fromDto(CafeDto dto) {

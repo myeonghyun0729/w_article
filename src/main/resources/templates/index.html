@@ -50,31 +50,31 @@
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="file"></span>
-                Orders
+                #
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="shopping-cart"></span>
-                Products
+                #
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="users"></span>
-                Customers
+                #
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="bar-chart-2"></span>
-                Reports
+                #
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="layers"></span>
-                Integrations
+                #
               </a>
             </li>
           </ul>
@@ -105,11 +105,44 @@
                 <td th:text="${cafe.cafeName}"></td>
                 <td th:text="${cafe.cafeId}"></td>
                 <td th:text="${cafe.menuId}"></td>
-                <td><button type="button" class="btn btn-primary insert-btn btn-sm"
-                            th:attr="data-cafe-id=${cafe.cafeId}, data-menu-id=${cafe.menuId}">저장</button></td>
+                <td>
+                  <div class="input-group collect-info">
+                    <div class="col-lg-3">
+                      <select class="form-control select-page">
+                        <option th:each="i : ${#numbers.sequence(0,20)}"
+                                th:value="${i}"
+                                th:text="${i}">
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-lg-3">
+                      <select class="form-control select-page-size">
+                        <option th:each="i : ${#numbers.sequence(1,15)}"
+                                th:value="${i}"
+                                th:text="${i}"
+                                th:selected="${i == 15}">
+                        </option>
+                      </select>
+                    </div>
+                    <button type="button" class="btn btn-primary insert-btn btn-sm"
+                              th:attr="data-cafe-id=${cafe.cafeId}, data-menu-id=${cafe.menuId}">저장</button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="row">
+          개수 : <p th:text="${articleList.totalElements}"></p>
+        </div>
+
+        <div class="input-group mb-6">
+          <form method="GET" action="/" class="form-inline" role="form" >
+            <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword" aria-describedby="button-addon2"
+                   th:value="${keyword}">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+          </form>
         </div>
 
         <div class="table-responsive">
@@ -140,6 +173,32 @@
             </tbody>
           </table>
         </div>
+        <div class="text-center">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+              <li class="page-item" th:classappend="${!articleList.hasPrevious()} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/?page=${articleList.number - 1}, size=${articleList.size}, keyword=${keyword}}"
+                   tabindex="-1">Prev</a>
+              </li>
+
+              <li class="page-item"
+                  th:each="i : ${#numbers.sequence(0, articleList.totalPages - 1)}"
+                  th:classappend="${i == articleList.number} ? 'active'">
+                <a class="page-link"
+                   th:href="@{/?page=${i}, size=${articleList.size}, keyword=${keyword}}"
+                   th:text="${i + 1}"></a>
+              </li>
+
+              <li class="page-item" th:classappend="${!articleList.hasNext()} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/?page=${articleList.number + 1}, size=${articleList.size}, keyword=${keyword}}">Next</a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
       </main>
     </div>
   </div>
@@ -147,10 +206,35 @@
   <script>
     $(document).ready(function() {
       $('.insert-btn').click(function() {
-          const cafeId = $(this).data('cafeId');
-          const menuId = $(this).data('menuId');
+        const cafeId = $(this).data('cafeId');
+        const menuId = $(this).data('menuId');
+        const page = $(this).closest('.collect-info').find('.select-page').val();
+        const pageSize = $(this).closest('.collect-info').find('.select-page-size').val();
+
+        $.ajax({
+          url: '/article/collect',
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            cafeId: cafeId,
+            menuId: menuId,
+            page : page,
+            pageSize : pageSize
+          },
+          success: function (data) {
+            console.log(data);
+            alert(2);
+            if (data.result) {
+              location.href = '/';
+            }
+          },
+          error: function (data) {
+            console.log(data);
+          }
+        });
       });
     });
+
   </script>
 
 </body>

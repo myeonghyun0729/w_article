@@ -18,11 +18,21 @@ public class Article extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
+
+    @Column(length = 20)
     private String cafeId;
+
+    @Column(length = 20)
     private String articleId;
+
+    @Column(length = 100)
     private String subject;
+
+    @Column(columnDefinition = "TEXT")
     private String summary;
+
     private String detailUrl;
+
     private Timestamp writeDateTimestamp;
 
     public static Article fromDto(ArticleDto dto) {
