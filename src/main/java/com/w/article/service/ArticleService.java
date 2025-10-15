@@ -10,10 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.List;
-
 @Service
 public class ArticleService {
 
@@ -29,7 +25,7 @@ public class ArticleService {
         if (StringUtils.isBlank(keyword)) {
             return articleRepository.findAll(pageable);
         }
-        return articleRepository.findListBySubject(keyword, pageable);
+        return articleRepository.findListBySubjectContainingIgnoreCase(keyword, pageable);
     }
 
     @Transactional

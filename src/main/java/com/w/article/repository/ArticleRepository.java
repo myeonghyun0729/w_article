@@ -9,5 +9,5 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     boolean existsByCafeIdAndArticleId(String cafeId, String articleId);
 
-    Page<Article> findListBySubject(String keyword, Pageable pageable);
+    Page<Article> findListBySubjectContainingIgnoreCase(String keyword, Pageable pageable);
 }

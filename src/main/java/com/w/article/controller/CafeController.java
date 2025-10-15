@@ -1,13 +1,14 @@
 package com.w.article.controller;
 
-import com.w.article.dto.CafeDto;
 import com.w.article.entity.Cafe;
 import com.w.article.service.CafeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/cafe")
 public class CafeController {
 
@@ -18,13 +19,11 @@ public class CafeController {
     }
 
     @GetMapping("/list")
-    public List<Cafe> getCafeList() {
-        return cafeService.selectCafeList();
-    }
+    public String cafeList(Model model) {
+        List<Cafe> cafeList = cafeService.selectCafeList();
 
-    @PostMapping("/create")
-    public Cafe createCafe(@RequestBody CafeDto dto) {
-        return cafeService.createCafe(Cafe.fromDto(dto));
+        model.addAttribute("cafeList", cafeList);
+        return "cafe-list";
     }
 }
 

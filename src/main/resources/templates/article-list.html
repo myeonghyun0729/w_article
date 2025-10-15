@@ -42,7 +42,7 @@
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">
+              <a class="nav-link" aria-current="page" href="/">
                 <span data-feather="home"></span>
                 Dashboard
               </a>
@@ -54,7 +54,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/article/list">
+              <a class="nav-link active" href="/article/list">
                 <span data-feather="shopping-cart"></span>
                 Article
               </a>
@@ -68,59 +68,12 @@
           <h1 class="h2">Dashboard</h1>
         </div>
 
-        <h2>Section title</h2>
-
-        <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">cafeName</th>
-              <th scope="col">cafeId</th>
-              <th scope="col">menuId</th>
-              <th scope="col">button</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr th:each="cafe : ${cafeList}">
-                <td th:text="${cafe.idx}"></td>
-                <td th:text="${cafe.cafeName}"></td>
-                <td th:text="${cafe.cafeId}"></td>
-                <td th:text="${cafe.menuId}"></td>
-                <td>
-                  <div class="input-group collect-info">
-                    <div class="col-lg-3">
-                      <select class="form-control select-page">
-                        <option th:each="i : ${#numbers.sequence(0,20)}"
-                                th:value="${i}"
-                                th:text="${i}">
-                        </option>
-                      </select>
-                    </div>
-                    <div class="col-lg-3">
-                      <select class="form-control select-page-size">
-                        <option th:each="i : ${#numbers.sequence(1,15)}"
-                                th:value="${i}"
-                                th:text="${i}"
-                                th:selected="${i == 15}">
-                        </option>
-                      </select>
-                    </div>
-                    <button type="button" class="btn btn-primary insert-btn btn-sm"
-                              th:attr="data-cafe-id=${cafe.cafeId}, data-menu-id=${cafe.menuId}">저장</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
         <div class="row">
           개수 : <p th:text="${articleList.totalElements}"></p>
         </div>
 
         <div class="input-group mb-6">
-          <form method="GET" action="/" class="form-inline" role="form" >
+          <form method="GET" action="/article/list" class="form-inline" role="form" >
             <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword" aria-describedby="button-addon2"
                    th:value="${keyword}">
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
@@ -169,7 +122,7 @@
                   th:each="i : ${#numbers.sequence(0, articleList.totalPages - 1)}"
                   th:classappend="${i == articleList.number} ? 'active'">
                 <a class="page-link"
-                   th:href="@{/article/list(page=${i}, keyword=${keyword})}"
+                   th:href="@{/rticle/list(page=${i}, keyword=${keyword})}"
                    th:text="${i + 1}"></a>
               </li>
 
@@ -188,36 +141,7 @@
 
   <script>
     $(document).ready(function() {
-      $('.insert-btn').click(function() {
-        const cafeId = $(this).data('cafeId');
-        const menuId = $(this).data('menuId');
-        const page = $(this).closest('.collect-info').find('.select-page').val();
-        const pageSize = $(this).closest('.collect-info').find('.select-page-size').val();
-
-        $.ajax({
-          url: '/api/article/collect',
-          method: 'POST',
-          dataType: 'json',
-          data: {
-            cafeId: cafeId,
-            menuId: menuId,
-            page : page,
-            pageSize : pageSize
-          },
-          success: function (data) {
-            console.log(data);
-            alert(2);
-            if (data.result) {
-              location.href = '/';
-            }
-          },
-          error: function (data) {
-            console.log(data);
-          }
-        });
-      });
     });
-
   </script>
 
 </body>

@@ -48,7 +48,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cafe/list">
+              <a class="nav-link active" href="/cafe/list">
                 <span data-feather="file"></span>
                 Cafe
               </a>
@@ -67,8 +67,6 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Dashboard</h1>
         </div>
-
-        <h2>Section title</h2>
 
         <div class="table-responsive">
           <table class="table table-striped table-sm">
@@ -114,74 +112,6 @@
             </tbody>
           </table>
         </div>
-
-        <div class="row">
-          개수 : <p th:text="${articleList.totalElements}"></p>
-        </div>
-
-        <div class="input-group mb-6">
-          <form method="GET" action="/" class="form-inline" role="form" >
-            <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword" aria-describedby="button-addon2"
-                   th:value="${keyword}">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
-          </form>
-        </div>
-
-        <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">cafeId</th>
-                <th scope="col">articleId</th>
-                <th scope="col">subject</th>
-                <th scope="col">summary</th>
-                <th scope="col">detailUrl</th>
-                <th scope="col">writeDateTimestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="article : ${articleList}">
-                <td th:text="${article.idx}"></td>
-                <td th:text="${article.cafeId}"></td>
-                <td th:text="${article.articleId}"></td>
-                <td th:text="${article.subject}"></td>
-                <td th:text="${article.summary}"></td>
-                <td>
-                  <a th:href="${article.detailUrl}" th:text="${article.detailUrl}"></a>
-                </td>
-                <td th:text="${article.writeDateTimestamp}"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="text-center">
-          <nav aria-label="Page navigation example" th:if="${articleList.totalPages > 0}">
-            <ul class="pagination">
-
-              <li class="page-item" th:classappend="${!articleList.hasPrevious()} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/article/list(page=${articleList.number - 1}, keyword=${keyword})}">Previous</a>
-              </li>
-
-              <li class="page-item"
-                  th:each="i : ${#numbers.sequence(0, articleList.totalPages - 1)}"
-                  th:classappend="${i == articleList.number} ? 'active'">
-                <a class="page-link"
-                   th:href="@{/article/list(page=${i}, keyword=${keyword})}"
-                   th:text="${i + 1}"></a>
-              </li>
-
-              <li class="page-item" th:classappend="${!articleList.hasNext()} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/article/list(page=${articleList.number + 1}, keyword=${keyword})}">Next</a>
-              </li>
-
-            </ul>
-          </nav>
-        </div>
-
       </main>
     </div>
   </div>
@@ -217,7 +147,6 @@
         });
       });
     });
-
   </script>
 
 </body>
