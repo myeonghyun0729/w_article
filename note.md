@@ -15,7 +15,10 @@ https://cafe.naver.com/f-e/cafes/14811936/menus/711
 -- 메이크 마이 웨딩
 https://cafe.naver.com/f-e/cafes/28757979/menus/14?viewType=L
 
-카페명 / 카페 ID / 메뉴 ID
-요즘웨딩 / 15903231 / 515
-웨딩킹 / 14811936 / 711
-메이크 마이 웨딩 / 28757979 / 14
+-- 결혼 이야기
+https://cafe.naver.com/f-e/cafes/10094602/menus/410?viewType=I&page=2
+
+- 카페명 / 카페 ID / 메뉴 ID
+- 요즘웨딩 / 15903231 / 515
+- 웨딩킹 / 14811936 / 711
+- 메이크 마이 웨딩 / 28757979 / 14
