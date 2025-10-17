@@ -59,6 +59,12 @@
                 Article
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/favorite/list">
+                <span data-feather="shopping-cart"></span>
+                Favorite
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -136,7 +142,6 @@
           },
           success: function (data) {
             console.log(data);
-            alert(2);
             if (data.result) {
               location.href = '/';
             }
